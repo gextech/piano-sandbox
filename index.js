@@ -23,7 +23,7 @@ app.get('/login', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-  res.cookie('logged', 'express').send('loign set');
+  res.cookie('logged', 'express').send('cookie set, you are logged!!');
 });
 
 app.post('/logout', function (req, res) {
