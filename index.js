@@ -4,7 +4,7 @@ var app = express();
 
 app.use(express.static('public'))
 
-app.get('/', function(req, res){
+app.get('/api', function(req, res){
   console.log(req.headers);
   res.send(req.headers);
 });
