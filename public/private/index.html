@@ -43,56 +43,47 @@
   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','');</script>
 <!-- End Google Tag Manager -->
-  <script>
-    ///TEST WITHOUT COMPOSER ACTIVE
-    /*
-    tp = window["tp"] || [];
-    tp.push(["setAid", "Gw0qLKfjdV"]);
-    tp.push(["setDebug", true]);
-    tp.push(["setSandbox", true]);
-    tp.push(["setEndpoint", "https://sandbox.tinypass.com"]);
+<script>
+  ///TEST WITHOUT COMPOSER ACTIVE
+  tp = window["tp"] || [];
+  tp.push(["setAid", "Gw0qLKfjdV"]);
+  tp.push(["setDebug", true]);
+  tp.push(["setSandbox", true]);
+  tp.push(["setEndpoint", "https://sandbox.tinypass.com"]);
 
-    tp.push(["init", function () {
-      // any additional functionality you need to execute after
-      // the tinypass javascript loads
-      tp.offer.show({
-        offerId: "OFD8TI6B4D8B",
-        templateId: "OTQAGLKGNK32",
-        displayMode: "modal",
-        //containerSelector: "#my-inline-offer",
-        termIds: ["TMJ1DNJ3EBV5", "TMHLWSR3CU6S"],
-        loginRequired: function () {
-        },
-        close: function () {
-        },
-        complete: function (params) {
-        },
-        customEvent: function (params) {
-        }
-      });
-    }]);
+  tp.push(["init", function () {
+    // any additional functionality you need to execute after
+    // the tinypass javascript loads
+    tp.offer.show({
+      offerId: "OFD8TI6B4D8B",
+      templateId: "OTQAGLKGNK32",
+      displayMode: "modal",
+      //containerSelector: "#my-inline-offer",
+      termIds: ["TMJ1DNJ3EBV5", "TMHLWSR3CU6S"],
+      loginRequired: function () {
+      },
+      close: function () {
+      },
+      complete: function (params) {
+      },
+      customEvent: function (params) {
+      }
+    });
+  }]);
 
-    (function (src) {
-      var a = document.createElement("script");
-      a.type = "text/javascript";
-      a.async = true;
-      a.src = src;
-      var b = document.getElementsByTagName("script")[0];
-      b.parentNode.insertBefore(a, b)
-    })("//sandbox.tinypass.com/api/tinypass.min.js");
-    */
+  (function (src) {
+    var a = document.createElement("script");
+    a.type = "text/javascript";
+    a.async = true;
+    a.src = src;
+    var b = document.getElementsByTagName("script")[0];
+    b.parentNode.insertBefore(a, b)
+  })("//sandbox.tinypass.com/api/tinypass.min.js");
 
-    (function(src) {
-        var a = document.createElement("script");
-        a.type = "text/javascript";
-        a.async = true;
-        a.src = src;
-        var b = document.getElementsByTagName("script")[0];
-        b.parentNode.insertBefore(a, b)
-    })("https://sandbox.tinypass.com/xbuilder/experience/load?aid=Gw0qLKfjdV");
-  </script>
-  <div class="page-wrapper">
-    Prueba
-  </div>
+
+</script>
+<div class="page-wrapper">
+  Paid content
+</div>
 </body>
 </html>
