@@ -2,10 +2,11 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var app = express();
 
-app.use(express.static('public'));
+app.use(express.static('html'));
 app.use(cookieParser());
 
-app.use('/private', express.static('public/private'))
+app.use('/private', express.static('html/private'))
+app.use('/restricted', express.static('html/restricted'))
 
 app.get('/api', function(req, res){
   console.log(req.headers);

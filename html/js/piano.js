@@ -1,8 +1,3 @@
-tp = window["tp"] || [];
-tp.push(["setAid", "Gw0qLKfjdV"]);
-tp.push(["setDebug", true]);
-tp.push(["setSandbox", true]);
-tp.push(["setEndpoint", "https://sandbox.tinypass.com"]);
 (function(src) {
     var a = document.createElement("script");
     a.type = "text/javascript";
