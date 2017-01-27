@@ -62,10 +62,13 @@
       // this is a reference implementation only
       // your own custom login/registration implementation would
       // need to return the tinypass-compatible userRef inside the callback
+      /*
       mysite.showLoginRegistration(function(tinypassUserRef) {
          tp.push(["setUserRef", tinypassUserRef]);
          tp.offer.startCheckout(params);
       });
+      */
+      window.location.href = "/login";
 
       // this will prevent the Piano error screen from displaying
       return false;
