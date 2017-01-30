@@ -1,6 +1,7 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var app = express();
+var bodyParser = require('body-parser');
 
 tinypass = require('tinypass').createClient({
   aid: process.env.TINYPASS_APPLICATION_ID,
@@ -8,13 +9,18 @@ tinypass = require('tinypass').createClient({
 });
 
 console.log("appID", process.env.TINYPASS_APPLICATION_ID);
-var eventHandlers = require('./event-handlers');
+var eventHandlers = require('./util/event-handlers');
 
 app.use(express.static('public'));
-app.use(cookieParser());
+app.use('/private', express.static('html/private'));
+app.use('/restricted', express.static('html/restricted'));
 
-app.use('/private', express.static('html/private'))
-app.use('/restricted', express.static('html/restricted'))
+console.log("weee");
+
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get('/api', function (req, res) {
   console.log(req.headers);
@@ -23,7 +29,7 @@ app.get('/api', function (req, res) {
 
 
 app.listen(3000, function () {
-  console.log("Running server on 3000 wee");
+  console.log("Running server on 3000");
 });
 
 app.get('/login', function (req, res) {
@@ -31,6 +37,39 @@ app.get('/login', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
+  console.log('handling post', req.body);
+  var username = req.body.username ;
+  var date = new Date();
+
+  var db = {
+    "atoms" : {
+      "id" : "uno",
+      "email" : "atomsmail@gmail.com"
+    }
+  };
+
+  var data = db[username];
+  if(data != undefined){
+
+    var userRef = {
+        "uid" : data.id,
+        "email" : data.email,
+        "timestamp" : date.getTime()
+    }
+
+
+    var userRefTxt =  JSON.stringify(userRef);
+    console.log("userRefTxt", userRefTxt);
+
+    var userRefTxtEncrypt = tinypass.encrypt(userRefTxt);
+    console.log("userRefTxtEncrypt", userRefTxtEncrypt);
+
+
+  }
+
+
+  console.log("user", data);
+
   res.cookie('logged', 'express').send('cookie set, you are logged!!');
 });
 

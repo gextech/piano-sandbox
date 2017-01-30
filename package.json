@@ -10,6 +10,7 @@
     "body-parser": "^1.15.2"
   },
   "devDependencies": {
+    "body-parser": "^1.16.0",
     "gulp": "^3.9.1",
     "gulp-jade": "^1.1.0",
     "gulp-nodemon": "^2.2.1"
