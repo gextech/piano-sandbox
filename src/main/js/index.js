@@ -18,8 +18,13 @@ app.use('/restricted', express.static('html/restricted'));
 console.log("weee");
 
 
-app.use(cookieParser());
+var cookieSession = require('cookie-session');
+app.use(cookieSession({
+  keys: ['adannocallaconnada']
+}));
+
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 
 app.get('/api', function (req, res) {
@@ -33,7 +38,7 @@ app.listen(3000, function () {
 });
 
 app.get('/login', function (req, res) {
-  res.send('GET request to the homepage')
+  res.redirect('/login.html');
 });
 
 app.post('/login', function (req, res) {
@@ -54,7 +59,7 @@ app.post('/login', function (req, res) {
     var userRef = {
         "uid" : data.id,
         "email" : data.email,
-        "timestamp" : date.getTime()
+        "timestamp" : Math.round(date.getTime()/1000)
     }
 
 
@@ -62,15 +67,19 @@ app.post('/login', function (req, res) {
     console.log("userRefTxt", userRefTxt);
 
     var userRefTxtEncrypt = tinypass.encrypt(userRefTxt);
-    console.log("userRefTxtEncrypt", userRefTxtEncrypt);
+    console.log("userRefTxt", userRefTxtEncrypt);
+    console.log("user", data);
 
+    res.cookie('userRef', userRefTxtEncrypt );
+   req.session.userRef = userRefTxtEncrypt;
+    res.redirect('/restricted/');
 
+  }else{
+    res.redirect('/login.html?error="badUser"');
   }
 
 
-  console.log("user", data);
 
-  res.cookie('logged', 'express').send('cookie set, you are logged!!');
 });
 
 app.post('/logout', function (req, res) {
