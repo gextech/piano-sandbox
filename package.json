@@ -8,12 +8,15 @@
     "express": "^4.14.0",
     "tinypass": "^2.0.0",
     "body-parser": "^1.15.2"
-
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-nodemon": "^2.2.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node index.js"
+    "run": "gulp"
   },
   "author": "",
   "license": "ISC"

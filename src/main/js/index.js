@@ -10,7 +10,7 @@ tinypass = require('tinypass').createClient({
 console.log("appID", process.env.TINYPASS_APPLICATION_ID);
 var eventHandlers = require('./event-handlers');
 
-app.use(express.static('html'));
+app.use(express.static('public'));
 app.use(cookieParser());
 
 app.use('/private', express.static('html/private'))
@@ -23,7 +23,7 @@ app.get('/api', function (req, res) {
 
 
 app.listen(3000, function () {
-  console.log("Running server on 3000");
+  console.log("Running server on 3000 wee");
 });
 
 app.get('/login', function (req, res) {
