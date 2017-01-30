@@ -2,6 +2,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var app = express();
 var bodyParser = require('body-parser');
+var userRoutes = require('./route-user');
 
 tinypass = require('tinypass').createClient({
   aid: process.env.TINYPASS_APPLICATION_ID,
@@ -33,59 +34,14 @@ app.get('/api', function (req, res) {
 });
 
 
-app.listen(3000, function () {
-  console.log("Running server on 3000");
-});
 
 app.get('/login', function (req, res) {
   res.redirect('/login.html');
 });
 
-app.post('/login', function (req, res) {
-  console.log('handling post', req.body);
-  var username = req.body.username ;
-  var date = new Date();
 
-  var db = {
-    "atoms" : {
-      "id" : "uno",
-      "email" : "atomsmail@gmail.com"
-    }
-  };
+app.use('/user/', userRoutes());
 
-  var data = db[username];
-  if(data != undefined){
-
-    var userRef = {
-        "uid" : data.id,
-        "email" : data.email,
-        "timestamp" : Math.round(date.getTime()/1000)
-    }
-
-
-    var userRefTxt =  JSON.stringify(userRef);
-    console.log("userRefTxt", userRefTxt);
-
-    var userRefTxtEncrypt = tinypass.encrypt(userRefTxt);
-    console.log("userRefTxt", userRefTxtEncrypt);
-    console.log("user", data);
-
-    res.cookie('userRef', userRefTxtEncrypt );
-   req.session.userRef = userRefTxtEncrypt;
-    res.redirect('/restricted/');
-
-  }else{
-    res.redirect('/login.html?error="badUser"');
-  }
-
-
-
-});
-
-app.post('/logout', function (req, res) {
-  clearCookie('logged');
-  res.send('cookie foo cleared');
-});
 
 
 app.get('/webhook', function(req, res) {
@@ -117,4 +73,8 @@ app.get('/webhook', function(req, res) {
     console.error(err.stack);
     res.status(500).send({message: err.message});
   }
+});
+
+app.listen(3000, function () {
+  console.log("Running server on 3000");
 });

@@ -25,7 +25,6 @@ gulp.task('nodemon', function runNodemon(cb) {
   return nodemon({
     script: './src/main/js/index.js',
     tasks : ['templates'],
-    env: { "TINYPASS_APPLICATION_ID":"Gw0qLKfjdV","TINYPASS_PRIVATE_KEY":"ipZ2XwW6QON33iWoULSVMwCpCyFKs85ohrL6pr6J"},
     ignore: ['/public/**'],
     watch : ['/src/main/js/', '/src/main/web/'],
     ext : "js jade"
