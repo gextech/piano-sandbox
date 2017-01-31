@@ -1,6 +1,59 @@
 doctype html
 html(lang='es')
   include ../header
+  script(src='/custom-js')
+  script.
+    tp.push(["setTags", ["restricted"]]);
+
+    tp.push(["addHandler", "checkoutClose", function( event ){
+      // The event parameter contains information about the state of closed modal
+      switch (event.state){
+        case 'checkoutCompleted':
+          // User completed the purchase and now has access
+          // Usually it's a good practice to reload the page
+          break;
+        case 'alreadyHasAccess':
+          // User already has access
+          // This state could be a result of user logging in during checkout process
+          // Usually it's a good practice to reload the page as well
+          break;
+        case 'close':
+          window.location.href = "/login";
+          // User did not complete the purchase and simply closed the modal
+      }
+    }]);
+
+    tp.push(["addHandler", "loginRequired", function(params){
+      // this is a reference implementation only
+      // your own custom login/registration implementation would
+      // need to return the tinypass-compatible userRef inside the callback
+      console.log("aqui el login required porque no hay usuario");
+      /*
+      mysite.showLoginRegistration(function(tinypassUserRef) {
+         tp.push(["setUserRef", tinypassUserRef]);
+         tp.offer.startCheckout(params);
+      });
+      */
+      /*
+      if(usr = ""){
+        window.location.href = "/login";
+      } else {
+
+      }
+      */
+      /*
+      idconline.showLoginRegistration(function(tinypassUserRef) {
+         tp.push(["setUserRef", tinypassUserRef]);
+         tp.offer.startCheckout(params);
+         console.log("Dentro del login");
+         console.log("Fin login");
+      });
+      */
+      // this will prevent the Piano error screen from displaying
+      return false;
+    }]);
+
+  script(src='../js/piano.js')
   body.type-three-column-home-page
 
     .page-wrapper

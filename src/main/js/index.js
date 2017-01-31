@@ -42,10 +42,15 @@ app.get('/login', function (req, res) {
 
 
 app.get('/custom-js', function (req, res) {
-  console.log('Signed Cookies: ', req.signedCookies);
-  console.log("session", req.session)
   res.setHeader('content-type', 'text/javascript');
-  res.end('var userRef="' + req.session.userRef.split("=")[0]);
+  if(req.session.userRef) {
+    userRef = req.session.userRef.split("=");
+    if(userRef.length > 0){
+      res.end('tp.push(["setUserRef", "' + userRef[0] + '"]);');
+    }
+  } else {
+    res.end('//A comment');
+  }
 });
 
 
