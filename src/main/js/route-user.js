@@ -8,11 +8,11 @@ module.exports = function () {
 
 
   app.post('/login', function (req, res) {
-    console.log('handling post', req.body);
+    console.log('handling login', req.body);
     var username = req.body.username ;
     var date = new Date();
 
-    var data = db[username];
+    var data = db.getUser(username);
 
     if(data != undefined){
 
@@ -43,6 +43,18 @@ module.exports = function () {
       res.redirect('/login.html?error="badUser"');
     }
 
+
+
+  });
+
+  app.post('/register', function (req, res) {
+    console.log('handling register', req.body);
+    var username = req.body.username ;
+    var email = req.body.email ;
+    var newUser = db.createUser(username, email);
+    console.log("new user", newUser);
+
+    res.redirect('/register.html?status=created');
 
 
   });
