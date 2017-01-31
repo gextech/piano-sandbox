@@ -2,14 +2,20 @@ doctype html
 html(lang='es')
   include header
   script(src='/js/piano.js')
-  body.type-three-column-home-page
-
-    .page-wrapper
-      | Prueba
-      ul
-        li
-          a(href='private') Contenido privado
-        li
-          a(href='restricted') Contenido restringido
-        li
-          a(href='calc') Calculators
+  body
+    h1.ui.divided.header Piano sandbox
+    ul
+      li Content behind paywal
+        ul
+          li
+            a(href='private') Contenido privado
+          li
+            a(href='restricted') Contenido restringido
+          li
+            a(href='calc') Calculators
+      li
+        a(href='login') Login
+      li
+        a(href="register.html") Registro
+      li
+        a(href='logout') Logout

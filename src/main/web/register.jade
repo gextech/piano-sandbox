@@ -3,15 +3,15 @@ html(lang='es')
   include header
   body
     h2.ui.dividing.header
-      | Login
+      | Register
     form(class="ui form" action="user/login" method="post")
       div.field
         label(for="user")
           |User
         input(type="text" name="username" id="user")
       div.field
-        label(for="password")
-          | password
-        input(type="text" name="password" id="password")
+        label(for="email")
+          | email
+        input(type="text" name="email" id="email")
       button.ui.button(type="submit")
         | Enviar
