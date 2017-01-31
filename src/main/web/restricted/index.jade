@@ -18,7 +18,7 @@ html(lang='es')
           // Usually it's a good practice to reload the page as well
           break;
         case 'close':
-          window.location.href = "/login";
+          window.location.href = "/";
           // User did not complete the purchase and simply closed the modal
       }
     }]);
@@ -27,28 +27,15 @@ html(lang='es')
       // this is a reference implementation only
       // your own custom login/registration implementation would
       // need to return the tinypass-compatible userRef inside the callback
-      console.log("aqui el login required porque no hay usuario");
+      window.location.href = "/login";
+
       /*
       mysite.showLoginRegistration(function(tinypassUserRef) {
          tp.push(["setUserRef", tinypassUserRef]);
          tp.offer.startCheckout(params);
       });
       */
-      /*
-      if(usr = ""){
-        window.location.href = "/login";
-      } else {
-
-      }
-      */
-      /*
-      idconline.showLoginRegistration(function(tinypassUserRef) {
-         tp.push(["setUserRef", tinypassUserRef]);
-         tp.offer.startCheckout(params);
-         console.log("Dentro del login");
-         console.log("Fin login");
-      });
-      */
+      
       // this will prevent the Piano error screen from displaying
       return false;
     }]);

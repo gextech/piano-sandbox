@@ -39,6 +39,16 @@ app.get('/login', function (req, res) {
   res.redirect('/login.html');
 });
 
+app.get('/logout', function (req, res) {
+
+  //res.send('cookie foo cleared');
+
+  //req.session.destroy(function(err) {
+  req.session = null;
+  res.redirect('/');
+  //})
+});
+
 
 
 app.get('/custom-js', function (req, res) {

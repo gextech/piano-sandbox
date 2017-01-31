@@ -47,15 +47,6 @@ module.exports = function () {
 
   });
 
-  app.get('/logout', function (req, res) {
-    clearCookie(req.session);
-    res.send('cookie foo cleared');
-
-    req.session.destroy(function(err) {
-      // cannot access session here
-    })
-  });
-
   return app;
 
 };
