@@ -8,6 +8,13 @@ module.exports = {
       .then(cb).catch(function (err) {
       console.log("trouble", err);
     })
+  },
+
+  createPianoUser : function (uid, email, cb) {
+    api.request("/publisher/user/create", "POST", null, {uid:uid, email:email})
+      .then(cb).catch(function (err) {
+      console.log("trouble", err);
+    })
   }
 
 }

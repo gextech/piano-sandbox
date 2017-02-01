@@ -20,14 +20,17 @@ module.exports = {
       "api_token" : apiToken
     };
 
-    console.log(aqs);
+    console.log("aqs", aqs);
+    console.log("body", body);
     extend(qs, aqs);
 
     options.uri = options.uri + endPoint
     options.qs = qs;
 
     if(body!=undefined){
-      options.body;
+      body.aid = appId;
+      options.body = body;
+      options.json =true;
     }
     if(method != undefined ){
       options.method = "POST"

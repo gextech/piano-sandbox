@@ -54,6 +54,10 @@ module.exports = function () {
     var newUser = db.createUser(username, email);
     console.log("new user", newUser);
 
+    userService.createPianoUser(newUser.id, newUser.email, function (data) {
+      console.log("---->> PIANO API createUser", data);
+    });
+
     res.redirect('/register.html?status=created');
 
 

@@ -54,7 +54,11 @@ module.exports = {
   },
   createUser: function (username, email) {
 
-      users[username] = {"id": uuidV1(), "email": email};
+     if(users[username]===undefined){
+       users[username] = {"id": uuidV1(), "email": email};
+     }
+
+
 
       return users[username];
   }
