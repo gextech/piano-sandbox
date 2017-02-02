@@ -7,7 +7,7 @@ gulp.task('templates', function() {
   var YOUR_LOCALS = {};
 
 
-  gulp.src('./src/main/web/js/*.js', {base: './src/main/web/js/'})
+  gulp.src(['./src/main/web/js/*.js','./src/main/web/js/**/*.js'], {base: './src/main/web/js/'})
     .pipe(gulp.dest('./public/js'));
 
   gulp.src(['./src/main/web/*.jade', './src/main/web/**/*.jade'])

@@ -2,8 +2,22 @@ doctype html
 html(lang='es')
   include ../header
   script.
+
+    var isSomeone = "nobody";
     console.log("lalala");
     tp.push(["setTags", ["calc"]]);
+    tp.push(['setCustomVariable', 'isSomeone', isSomeone]);
+
+    tp.push(["addHandler", "customEvent", function (event) {
+      switch (event.eventName) {
+        case "login":
+          console.log("handling login yeah", event);
+          isSomeone = "someone"
+          tp.push(['setCustomVariable', 'isSomeone', isSomeone]);
+          //tp.offer.reload(event.params.iframeid, null)
+          break;
+      }
+    }])
 
 
   script(src='../js/piano.js')
