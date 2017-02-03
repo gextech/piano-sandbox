@@ -11,37 +11,100 @@ html(lang='es')
         case 'checkoutCompleted':
           // User completed the purchase and now has access
           // Usually it's a good practice to reload the page
+          alert("Completado");
           break;
         case 'alreadyHasAccess':
           // User already has access
           // This state could be a result of user logging in during checkout process
           // Usually it's a good practice to reload the page as well
+          alert("Usuario logueado");
           break;
         case 'close':
-          window.location.href = "/";
+          if(tp.userRef != undefined && tp.userRef != ""){
+            alert("Usuario ya logueado");
+          } else {
+            alert("cerrar tache");
+            window.location.href = "/login";
+          }
+
+          //alert("Se cierra con el tache");
+          //window.location.href = "/";
           // User did not complete the purchase and simply closed the modal
       }
     }]);
 
+    tp.push(["addHandler", "checkoutError", function(errorData){
+       alert("Error! " + errorData.message);
+    }]);
+
+    //Si existe userRef nunca entra aquí
     tp.push(["addHandler", "loginRequired", function(params){
-      // this is a reference implementation only
-      // your own custom login/registration implementation would
-      // need to return the tinypass-compatible userRef inside the callback
+      //show modal login
+      console.log("Se muestra si requiere login");
+
+
+      //alert("no existe user ref y debe crearse");
       window.location.href = "/login";
 
+      //Modal
       /*
-      mysite.showLoginRegistration(function(tinypassUserRef) {
-         tp.push(["setUserRef", tinypassUserRef]);
-         tp.offer.startCheckout(params);
+      tp.template.show({
+        templateId: "OTUIISTL0HW1",
+        displayMode: "modal",
+        loginRequired: function() {},
+        close: function() {},
+        complete: function(params) {},
+        customEvent: function(params) {}
       });
       */
-      
+
+      /*
+      tp.offer.show({
+          offerId: "OF9NHX9CFYG9",
+          templateId: "OTUIISTL0HW1",
+          displayMode: "modal",
+          termIds: [ "TMI4LQG0VJ6S" ],
+          loginRequired: function() {},
+          close: function() {},
+          complete: function(params) {},
+          customEvent: function(params) {}
+      });
+      */
+
+      /* LLamar en caso de hacer el login/registro en modal
+      mysite.showLoginRegistration(function(tinypassUserRef) {
+         tp.push(["setUserRef", tinypassUserRef]);
+         tp.offer.startCheckout(params); //Este metodo llama al termino seleccionado
+      });
+      */
+
       // this will prevent the Piano error screen from displaying
       return false;
     }]);
 
+    tp.push(["addHandler", "showOffer", function( offerParams ){
+        // Your code after offer has been shown
+        console.log("---------------");
+        console.log("Mostrando oferta");
+        console.log("---------------");
+    } ]);
+
+    tp.push( [ "addHandler", "showTemplate", function ( templateParams ) {
+    	// Your code after template has been shown
+    	console.log("---------------");
+      console.log("Mostrando template");
+      console.log("---------------");
+    }]);
+
   script(src='../js/piano.js')
   body.type-three-column-home-page
-
     .page-wrapper
       | restricted
+    .first-paragraph
+      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut metus consectetur, accumsan eros quis, tristique dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus venenatis semper nunc, at porttitor sapien tempor in. Sed semper mi quis urna fermentum, a iaculis nisl volutpat. Vivamus tempor maximus dictum. Donec vulputate ultricies accumsan. Donec vitae quam sed est tincidunt dapibus. Nunc facilisis purus vitae laoreet scelerisque.
+    br
+    p
+    br
+    #premium-content
+      p Cras luctus ante eu neque accumsan ultricies. Suspendisse interdum, diam in luctus tempus, metus justo sollicitudin orci, vitae finibus felis nisl in lacus. Morbi tincidunt, elit porttitor tincidunt dictum, elit diam consequat eros, in aliquam lorem massa vitae ante. Aliquam erat volutpat. Quisque ut pretium diam. Nulla id consectetur ex. Fusce eu varius mauris, ac finibus orci. Vestibulum congue maximus enim, a suscipit tortor fermentum eu.
+      p Aenean vel felis nulla. Suspendisse vitae elementum erat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur ac venenatis massa. Nullam a lacus non nisl laoreet cursus a dapibus ante. Vestibulum nisi ipsum, sagittis vitae malesuada ut, varius at tellus. In hac habitasse platea dictumst. Curabitur sed sem malesuada mauris posuere fringilla.

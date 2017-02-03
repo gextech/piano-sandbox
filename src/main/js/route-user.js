@@ -52,14 +52,26 @@ module.exports = function () {
     var username = req.body.username ;
     var email = req.body.email ;
     var newUser = db.createUser(username, email);
+    console.log("Mi email: "+email);
     console.log("new user", newUser);
-
+    console.log("user email", newUser.email);
     userService.createPianoUser(newUser.id, newUser.email, function (data) {
       console.log("---->> PIANO API createUser", data);
     });
 
     res.redirect('/register.html?status=created');
 
+
+  });
+
+  app.post('/verifyEmail', function (req, res) {
+    console.log("--------------------");
+    var email = req.body.email;
+    console.log("Email: "+email);
+    console.log("Verificando si el usuario existe");
+    userService.verifyEmail(email, function (data) {
+      console.log("-----Verificando usuario si existe en piano------");
+    });
 
   });
 

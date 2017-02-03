@@ -1,5 +1,18 @@
 var jade = require('gulp-jade');
 var gulp = require('gulp');
+var connect = require('gulp-connect');
+var cors = require('cors');
+
+gulp.task('connect', function() {
+  connect.server({
+    root: './src/main/web',
+    middleware: function() {
+      res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        return [cors()];
+    }
+  });
+});
 
 var nodemon = require('gulp-nodemon');
 

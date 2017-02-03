@@ -53,13 +53,14 @@ module.exports = {
     return users[username]
   },
   createUser: function (username, email) {
-
-     if(users[username]===undefined){
+      console.log("Usuario en user-db: "+username+", email: "+email);
+     if(users[username]===undefined) {
+       console.log("Creando usuario inexistente");
        users[username] = {"id": uuidV1(), "email": email};
      }
 
-
-
+      console.log("-------");
+      console.log(users[username]);
       return users[username];
   }
 

@@ -14,8 +14,10 @@
   "devDependencies": {
     "body-parser": "^1.16.0",
     "cookie-session": "^2.0.0-alpha.2",
+    "cors": "^2.8.1",
     "extend": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
     "gulp-jade": "^1.1.0",
     "gulp-nodemon": "^2.2.1",
     "uuid": "^3.0.1"
