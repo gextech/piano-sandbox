@@ -21,7 +21,7 @@ module.exports = {
   },
 
   verifyEmail : function (email, cb) {
-    api.request("/user/search", "POST", null, {email:email})
+    api.request("/publisher/user/search", "POST", null, {email:email})
       .then(cb).catch(function (err) {
       console.log("trouble", err);
     })

@@ -2,6 +2,7 @@ console.log("here ------->>>", this);
 console.log("here ------->>>", angular);
 
 
+var apiUrl = "https://c15374bd.ngrok.io";
 
 var scope = angular.element($("#thisForm")).scope();
 var http = angular.injector(["ng"]).get("$http");
@@ -34,15 +35,46 @@ scope.$apply(function() {
     return scope.isValid;
   }
 
-  scope.isUserExist = function(str){
-    //console.log("padre tp: "+parent.tp);
-    var datos = "email:"+str;
-    console.log("aqui algo "+datos);
+  scope.emailChange = function (email) {
+    console.log("Cambiando el email");
+    if(email === undefined || email === ""){
+      return;
+    }
 
-    http.post("https://41b61b65.ngrok.io/verifyEmail", datos)
-      .success(function(res) {
-        console.log("funciona");
-        console.log(res)
+    scope.isUserExist(email);
+  }
+
+  scope.isUserExist = function (email) {
+    console.log("Verificando si email existe");
+    var isEmailExist = false;
+    //scope.emailClass = "only-email";
+
+    console.log("antes de ajax");
+
+    $.post( apiUrl+"/user/isEmailExists", { email: email })
+      .done(function( data ) {
+        console.log(data);
+        if(data.isExist === true){ //Mostrar pass
+          console.log("Mostrar only-email-enable");
+          scope.emailClass = "only-email-enable";
+        } else { //Ocultar pass
+          console.log("Ocultar only-email");
+          scope.emailClass = "only-email";
+        }
+        console.log("ver clase actual");
       });
+  }
+
+  scope.searchUser = function (email) {
+    var isValid = false;
+    $.ajax({
+      method: "GET",
+      url: apiUrl+"/user/getHola"
+    })
+    .done(function( data ) {
+      console.log(data);
+      isValid = true;
+    });
+    return isValid;
   }
 });

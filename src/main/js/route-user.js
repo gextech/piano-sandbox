@@ -64,15 +64,39 @@ module.exports = function () {
 
   });
 
-  app.post('/verifyEmail', function (req, res) {
-    console.log("--------------------");
-    var email = req.body.email;
-    console.log("Email: "+email);
-    console.log("Verificando si el usuario existe");
-    userService.verifyEmail(email, function (data) {
-      console.log("-----Verificando usuario si existe en piano------");
-    });
+  app.post('/isEmailExists', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
+    res.set('Content-Type', 'application/json');
 
+    var email = req.body.email;
+    var isExist = false;
+
+    userService.verifyEmail(email, function (data) {
+      dataUser = JSON.parse(data);
+      console.log(dataUser.users);
+      if(dataUser.users.length > 0) {
+        actualUser = dataUser.users[0];
+        if(actualUser.email === email){
+          isExist = true;
+        }
+      }
+
+      if(isExist){
+        res.send({isExist: true});
+      } else {
+        res.send({isExist: false});
+      }
+    });
+  });
+
+  app.get('/getHola', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+    res.set('Content-Type', 'text/html');
+    res.send('hello world GET');
   });
 
   return app;
