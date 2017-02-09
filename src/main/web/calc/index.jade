@@ -18,7 +18,23 @@ html(lang='es')
           //tp.offer.reload(event.params.iframeid, null)
           break;
       }
-    }])
+    }]);
+
+    tp.push(["addHandler", "showOffer", function( offerParams ){
+            // Your code after offer has been shown
+            console.log("---------------");
+            console.log("Mostrando oferta");
+            console.log(offerParams);
+            console.log(tp.offer);
+            console.log("---------------");
+        } ]);
+
+    tp.push( [ "addHandler", "showTemplate", function (templateParams) {
+        console.log("---------------");
+        console.log("Mostrando template en calc");
+        console.log(templateParams);
+        console.log("---------------");
+    } ]);
 
 
   script(src='../js/piano.js')
