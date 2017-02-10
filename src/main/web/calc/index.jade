@@ -1,7 +1,7 @@
 doctype html
 html(lang='es')
   include ../header
-
+  script(src='/custom-js')
   script.
 
     var isSomeone = "nobody";
@@ -9,6 +9,7 @@ html(lang='es')
     tp.push(["setTags", ["calc"]]);
     tp.push(['setCustomVariable', 'isSomeone', isSomeone]);
 
+    /*
     tp.push(["addHandler", "customEvent", function (event) {
       switch (event.eventName) {
         case "login":
@@ -19,7 +20,7 @@ html(lang='es')
           break;
       }
     }]);
-
+    */
     tp.push(["addHandler", "showOffer", function( offerParams ){
             // Your code after offer has been shown
             console.log("---------------");

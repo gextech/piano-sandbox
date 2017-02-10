@@ -1,7 +1,7 @@
 console.log("here ------->>>", this);
 console.log("here ------->>>", angular);
 
-var apiUrl = "https://65e0c1b0.ngrok.io";
+var apiUrl = "https://c9c9f257.ngrok.io";
 
 var scope = angular.element($("#thisForm")).scope();
 var http = angular.injector(["ng"]).get("$http");
