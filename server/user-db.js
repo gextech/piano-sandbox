@@ -1,3 +1,4 @@
+/* eslint-disable */
 var fs = require('fs');
 var uuidV1 = require('uuid/v1');
 var persistPath =  __dirname + "/users.json";
