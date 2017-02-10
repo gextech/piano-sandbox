@@ -1,3 +1,4 @@
+var fs = require('fs')
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var app = express();
@@ -99,6 +100,13 @@ app.get('/webhook', function(req, res) {
   }
 });
 
-app.listen(3000, function () {
+var hskey = fs.readFileSync('./piano-gex.pem');
+var hscert = fs.readFileSync('./piano-gex-cert.pem');
+var options = {
+    key: hskey,
+    cert: hscert
+};
+
+https.createServer(options, app).listen(3000 , function () {
   console.log("Running server on 3000");
 });
