@@ -23,7 +23,7 @@ gulp.task('nodemon', function runNodemon(cb) {
     script: './src/server/index.js',
     tasks : ['templates'],
     ignore: ['/public/**'],
-    watch : ['/src'],
+    watch : ['/src/'],
     ext : "js jade"
   }).on('start', function start() {
     // to avoid nodemon being started multiple times
