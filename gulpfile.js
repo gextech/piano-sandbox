@@ -2,6 +2,7 @@
 var fs = require('fs');
 var jade = require('gulp-jade');
 var gulp = require('gulp');
+var refresh = require('gulp-refresh');
 var nodemon = require('gulp-nodemon');
 
 gulp.task('templates', function() {
@@ -28,6 +29,10 @@ gulp.task('templates', function() {
 
 gulp.task('nodemon', function runNodemon(cb) {
   var started = false;
+  refresh.listen({
+    key: fs.readFileSync('./piano-gex.pem'),
+    cert: fs.readFileSync('./piano-gex-cert.pem')
+  });
   return nodemon({
     script: 'src/server/index.js',
     tasks : ['templates'],
@@ -40,6 +45,8 @@ gulp.task('nodemon', function runNodemon(cb) {
       cb();
       started = true;
     }
+  }).on('restart', function () { 
+    setTimeout(refresh.reload, 500)
   });
 });
 

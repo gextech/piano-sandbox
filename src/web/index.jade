@@ -10,7 +10,7 @@ html(lang='es')
           each page in pages()
             li
               a(href=page)
-                // Changes "pages/folder_name" to "Folder name"
+                //- Changes "pages/folder_name" to "Folder name"
                 -
                   var page = page.slice(page.indexOf('/') + 1).replace('_', ' ')
                 = page.charAt(0).toUpperCase() + page.slice(1)
