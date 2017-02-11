@@ -1,7 +1,7 @@
 console.log("here ------->>>", this);
 console.log("here ------->>>", angular);
 
-var apiUrl = "https://c9c9f257.ngrok.io";
+var apiUrl = "https://b60f943f.ngrok.io";
 
 var scope = angular.element($("#thisForm")).scope();
 var http = angular.injector(["ng"]).get("$http");
@@ -13,7 +13,6 @@ delete http.defaults.headers.common["X-Requested-With"];
 http.defaults.headers.common["Accept"] = "application/json";
 http.defaults.headers.common["Content-Type"] = "application/json";
 */
-
 
 scope.$apply(function() {
   scope.double = function(value) { return value * 2; };
@@ -84,4 +83,28 @@ scope.$apply(function() {
     });
     return isValid;
   }
+
+  scope.sendDataToParent = function(currentTerm) {
+    //window.postMessage();
+    /*
+    console.log(scope.user);
+    console.log("*************");
+    scope.user = {
+                     "uid": "uno",
+                     "email": "prueba@gmail.com",
+                     "displayName": "atomsmail@gmail.com",
+                     "valid": true,
+                     "firstName": null,
+                     "lastName": null
+                 };
+
+    console.log(scope.isUserValid());
+    console.log("*************");
+    console.log(scope.user);
+    console.log(scope._getConfigFn());
+    */
+    console.log("trae algo el TPParam");
+    console.log(window.TPParam);
+  }
+
 });
