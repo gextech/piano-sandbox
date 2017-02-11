@@ -24,7 +24,7 @@ var readDataFn = function fnReadData (path) {
   try {
     var data = fs.readFileSync(path, 'utf8');
     users = JSON.parse(data);
-    console.log('Data length: ', data.length, ' content:\n', users);
+    console.log('>> Data\n- Elements:', Object.keys(users).length, '\n- Content:\n', users);
   } catch (e) {
     console.log('File doesn\'t exist or data was INVALID, creating empty users-db');
     users = {};

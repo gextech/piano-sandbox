@@ -19,9 +19,6 @@ app.use(express.static('public'));
 app.use('/private', express.static('html/private'));
 app.use('/restricted', express.static('html/restricted'));
 
-console.log("weee");
-
-
 var cookieSession = require('cookie-session');
 app.use(cookieSession({
   keys: ['adannocallaconnada']
@@ -29,21 +26,16 @@ app.use(cookieSession({
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-
 app.get('/api', function (req, res) {
   console.log(req.headers);
   res.send(req.headers);
 });
-
-
 
 app.get('/login', function (req, res) {
   res.redirect('/login.html');
 });
 
 app.get('/logout', function (req, res) {
-
   //res.send('cookie foo cleared');
 
   //req.session.destroy(function(err) {
@@ -51,8 +43,6 @@ app.get('/logout', function (req, res) {
   res.redirect('/');
   //})
 });
-
-
 
 app.get('/custom-js', function (req, res) {
   res.setHeader('content-type', 'text/javascript');
@@ -66,10 +56,7 @@ app.get('/custom-js', function (req, res) {
   }
 });
 
-
 app.use('/user/', userRoutes());
-
-
 
 app.get('/webhook', function(req, res) {
   try {
