@@ -46,7 +46,7 @@ gulp.task('nodemon', function runNodemon(cb) {
       started = true;
     }
   }).on('restart', function () { 
-    setTimeout(refresh.reload, 500)
+    setTimeout(refresh.reload, 1000)
   });
 });
 
