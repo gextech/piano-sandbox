@@ -7,14 +7,14 @@ var nodemon = require('gulp-nodemon');
 gulp.task('templates', function() {
   var YOUR_LOCALS = {};
 
-  gulp.src(['**/*.js'], { base: './src/web/js' })
-    .pipe(gulp.dest('./public/js'));
+  gulp.src(['./src/web/**/*.js'])
+    .pipe(gulp.dest('./public'));
 
-  gulp.src(['**/*.jade'], { base: './src/web' })
+  gulp.src(['./src/web/**/*.jade'])
     .pipe(jade({
       locals: YOUR_LOCALS
     }))
-    .pipe(gulp.dest('./public/'))
+    .pipe(gulp.dest('./public'))
 });
 
 gulp.task('nodemon', function runNodemon(cb) {
