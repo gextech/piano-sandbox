@@ -1,14 +1,28 @@
 /* eslint-disable */
+var fs = require('fs');
 var jade = require('gulp-jade');
 var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
 
 gulp.task('templates', function() {
+  var LOCALS = {
+    // Read content in src/web/pages
+    pages: function() {
+      var pages = fs.readdirSync('src/web/pages');
+      return pages.map(function (page) {
+        return 'pages/' + page;
+      });
+    }
+  }
+
   gulp.src(['src/web/**/*.js'])
     .pipe(gulp.dest('public'));
 
   gulp.src(['src/web/**/*.jade', '!src/web/header.jade'])
-    .pipe(jade({ pretty: true }))
+    .pipe(jade({
+      pretty: true,
+      locals: LOCALS
+    }))
     .pipe(gulp.dest('public'))
 });
 

@@ -7,12 +7,13 @@ html(lang='es')
     ul
       li Content behind paywal
         ul
-          li
-            a(href='private') Contenido privado
-          li
-            a(href='restricted') Contenido restringido
-          li
-            a(href='calc') Calculators
+          each page in pages()
+            li
+              a(href=page)
+                // Changes "pages/folder_name" to "Folder name"
+                -
+                  var page = page.slice(page.indexOf('/') + 1).replace('_', ' ')
+                = page.charAt(0).toUpperCase() + page.slice(1)
       li
         a(href='login') Login
       li
