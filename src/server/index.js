@@ -1,5 +1,8 @@
+/* eslint-disable */
+var fs = require('fs')
 var express = require('express');
 var cookieParser = require('cookie-parser');
+var https = require('https');
 var app = express();
 var bodyParser = require('body-parser');
 var userRoutes = require('./route-user');
@@ -16,9 +19,6 @@ app.use(express.static('public'));
 app.use('/private', express.static('html/private'));
 app.use('/restricted', express.static('html/restricted'));
 
-console.log("weee");
-
-
 var cookieSession = require('cookie-session');
 app.use(cookieSession({
   keys: ['adannocallaconnada']
@@ -26,21 +26,16 @@ app.use(cookieSession({
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-
 app.get('/api', function (req, res) {
   console.log(req.headers);
   res.send(req.headers);
 });
-
-
 
 app.get('/login', function (req, res) {
   res.redirect('/login.html');
 });
 
 app.get('/logout', function (req, res) {
-
   //res.send('cookie foo cleared');
 
   //req.session.destroy(function(err) {
@@ -48,8 +43,6 @@ app.get('/logout', function (req, res) {
   res.redirect('/');
   //})
 });
-
-
 
 app.get('/custom-js', function (req, res) {
   res.setHeader('content-type', 'text/javascript');
@@ -63,10 +56,7 @@ app.get('/custom-js', function (req, res) {
   }
 });
 
-
 app.use('/user/', userRoutes());
-
-
 
 app.get('/webhook', function(req, res) {
   try {
@@ -99,6 +89,13 @@ app.get('/webhook', function(req, res) {
   }
 });
 
-app.listen(3000, function () {
+var hskey = fs.readFileSync('./piano-gex.pem');
+var hscert = fs.readFileSync('./piano-gex-cert.pem');
+var options = {
+    key: hskey,
+    cert: hscert
+};
+
+https.createServer(options, app).listen(3000 , function () {
   console.log("Running server on 3000");
 });

@@ -1,17 +1,18 @@
 doctype html
 html(lang='es')
-  include header
+  head
+    include header
   body
     h2.ui.dividing.header
-      | Login
-    form(class="ui form" action="user/login" method="post")
+      | Register
+    form(class="ui form" action="user/register" method="post")
       div.field
         label(for="user")
           |User
         input(type="text" name="username" id="user")
       div.field
-        label(for="password")
-          | password
-        input(type="text" name="password" id="password")
+        label(for="email")
+          | email
+        input(type="text" name="email" id="email")
       button.ui.button(type="submit")
         | Enviar

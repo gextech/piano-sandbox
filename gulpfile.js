@@ -1,45 +1,43 @@
+/* eslint-disable */
+var fs = require('fs');
 var jade = require('gulp-jade');
 var gulp = require('gulp');
-var connect = require('gulp-connect');
-var cors = require('cors');
-
-gulp.task('connect', function() {
-  connect.server({
-    root: './src/main/web',
-    middleware: function() {
-      res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-        return [cors()];
-    }
-  });
-});
-
+var refresh = require('gulp-refresh');
 var nodemon = require('gulp-nodemon');
 
 gulp.task('templates', function() {
-  var YOUR_LOCALS = {};
+  var LOCALS = {
+    // Read content in src/web/pages
+    pages: function() {
+      var pages = fs.readdirSync('src/web/pages');
+      return pages.map(function (page) {
+        return 'pages/' + page;
+      });
+    }
+  }
 
+  gulp.src(['src/web/**/*.js'])
+    .pipe(gulp.dest('public'));
 
-  gulp.src(['./src/main/web/js/*.js','./src/main/web/js/**/*.js'], {base: './src/main/web/js/'})
-    .pipe(gulp.dest('./public/js'));
-
-  gulp.src(['./src/main/web/*.jade', './src/main/web/**/*.jade'])
+  gulp.src(['src/web/**/*.jade', '!src/web/header.jade'])
     .pipe(jade({
-      locals: YOUR_LOCALS
+      pretty: true,
+      locals: LOCALS
     }))
-    .pipe(gulp.dest('./public/'))
+    .pipe(gulp.dest('public'))
 });
-
-
 
 gulp.task('nodemon', function runNodemon(cb) {
   var started = false;
-
+  refresh.listen({
+    key: fs.readFileSync('./piano-gex.pem'),
+    cert: fs.readFileSync('./piano-gex-cert.pem')
+  });
   return nodemon({
-    script: './src/main/js/index.js',
+    script: 'src/server/index.js',
     tasks : ['templates'],
-    ignore: ['/public/**'],
-    watch : ['/src/main/js/', '/src/main/web/'],
+    ignore: ['public/**'],
+    watch : ['src/'],
     ext : "js jade"
   }).on('start', function start() {
     // to avoid nodemon being started multiple times
@@ -47,6 +45,8 @@ gulp.task('nodemon', function runNodemon(cb) {
       cb();
       started = true;
     }
+  }).on('restart', function () { 
+    setTimeout(refresh.reload, 1000)
   });
 });
 
