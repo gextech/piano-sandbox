@@ -109,12 +109,17 @@ scope.$apply(function() {
     message.sender = window.TPParam.params.iframeId;
     message.displayMode = window.TPParam.params.displayMode;
     message.recipient = "opener";
-    message.event = "loginRequired";
-    message.params = {};
+    //message.event = "loginRequired";
+    message.event = "customEvent";
+    //message.params = {name: "aquilalala", uid: "tres", lastName: "apellido"};
+    var myparams = {uid: "tres", firstName: "Isain", lastName: "Hernandez", email:"checklocal@123.com"};
+    message.params = { eventName: "userRegister", params: myparams };
     console.log(message);
-    console.log($(window).parent);
+    var encMsg = JSON.stringify(message);
+    console.log(encMsg);
 
-    window.parent.postMessage(JSON.stringify(message), message.parentURL);
+    window.parent.postMessage(encMsg, message.parentURL);
+    console.log(_randomString(16));
 
 
 /*

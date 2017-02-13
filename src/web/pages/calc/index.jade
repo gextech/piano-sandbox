@@ -35,6 +35,40 @@ html(lang='es')
           console.log("---------------");
       } ]);
 
+      tp.push(["addHandler", "loginRequired", function(params, event){
+        console.log("Aqui recivo params y voy a ver el user");
+        console.log(params);
+        console.log(event);
+        /*
+        mysite.showLoginRegistration(function(tinypassUserRef) {
+           tp.push(["setUserRef", tinypassUserRef]);
+           tp.offer.startCheckout(params);
+        });
+        */
+        // this will prevent the Piano error screen from displaying
+        return false;
+      }]);
+
+      window.addEventListener('message',function(event) {
+      	console.log("Aqui un mensaje!!!----------");
+      	console.log(event);
+      	console.log("-------------------");
+      },false);
+
+
+      tp.push(["addHandler", "checkoutCustomEvent", function(event){
+        switch(event.eventName) {
+         case "userRegister":
+           console.log("Registrar usuario y hacer el checkout");
+
+           console.log("Evento: ");
+           console.log(event);
+           console.log(tp.containerUtils.getIframe);
+           //console.log("Params para checkout: "+event.p);
+           break;
+        }
+      }]);
+
   body.type-three-column-home-page
     .page-wrapper
       | Calc
