@@ -6,6 +6,7 @@ var https = require('https');
 var app = express();
 var bodyParser = require('body-parser');
 var userRoutes = require('./route-user');
+var argv = require('yargs').argv;
 
 tinypass = require('tinypass').createClient({
   aid: process.env.TINYPASS_APPLICATION_ID,
@@ -89,13 +90,17 @@ app.get('/webhook', function(req, res) {
   }
 });
 
-var hskey = fs.readFileSync('./piano-gex.pem');
-var hscert = fs.readFileSync('./piano-gex-cert.pem');
-var options = {
-    key: hskey,
-    cert: hscert
-};
-
-https.createServer(options, app).listen(3000 , function () {
-  console.log("Running server on 3000");
-});
+// typeof argv.https = String
+if (argv.https === 'true') {
+  var options = {
+    key: fs.readFileSync('./piano-gex.pem'),
+    cert: fs.readFileSync('./piano-gex-cert.pem')
+  };
+  https.createServer(options, app).listen(3000 , function () {
+    console.log(">> HTTPS server running on port 3000 (https://localhost:3000)");
+  });
+} else {
+  app.listen(3000 , function () {
+    console.log(">> Server running on port 3000 (http://localhost:3000)");
+  });
+}
