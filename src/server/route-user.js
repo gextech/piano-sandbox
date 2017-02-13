@@ -48,15 +48,29 @@ module.exports = function () {
   });
 
   app.post('/register', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
+    res.set('Content-Type', 'application/json');
+
     console.log('handling register', req.body);
     var username = req.body.username ;
     var email = req.body.email ;
     var newUser = db.createUser(username, email);
+    var innerUser = req.body.inner;
+
+    console.log("hay inner: "+innerUser);
     console.log("Mi email: "+email);
     console.log("new user", newUser);
     console.log("user email", newUser.email);
     userService.createPianoUser(newUser.id, newUser.email, function (data) {
       console.log("---->> PIANO API createUser", data);
+
+      if(innerUser !== undefined){
+        console.log("Hay que regresar usuario al template");
+        res.send(data);
+        return;
+      }
     });
 
     res.redirect('/register.html?status=created');

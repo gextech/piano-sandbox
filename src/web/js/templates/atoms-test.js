@@ -84,10 +84,7 @@ scope.$apply(function() {
     return isValid;
   }
 
-  scope.sendDataToParent = function(currentTerm) {
-    //window.postMessage();
-    /*
-    console.log(scope.user);
+  scope.sendDataToParent = function(currentTerm) {;
     console.log("*************");
     scope.user = {
                      "uid": "uno",
@@ -98,13 +95,47 @@ scope.$apply(function() {
                      "lastName": null
                  };
 
+    window.TPParam.config.user.valid = true;
+    console.log(window.TPParam);
     console.log(scope.isUserValid());
     console.log("*************");
-    console.log(scope.user);
-    console.log(scope._getConfigFn());
-    */
+    console.log(window.TPParam.config.user);
+    //scope.startCheckout(currentTerm);
+    console.log(generalModule);
+
+    //Send a loginRequired event
+    var message = {};
+    message.parentURL = window.TPParam.params.url;
+    message.sender = window.TPParam.params.iframeId;
+    message.displayMode = window.TPParam.params.displayMode;
+    message.recipient = "opener";
+    message.event = "loginRequired";
+    message.params = {};
+    console.log(message);
+    console.log($(window).parent);
+
+    window.parent.postMessage(JSON.stringify(message), message.parentURL);
+
+
+/*
+    //Crear user en piano
+    var request = http({
+      method: "post",
+      url: apiUrl+"/user/register",
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      data: $.param({email: "test3_3@gmail.com", username: "Test tercero"})
+    });
+
+    request.success( function(data) {
+      console.log("Se registro al usuario.......");
+      console.log(data);
+    });
+
+    /*
     console.log("trae algo el TPParam");
     console.log(window.TPParam);
+    console.log(window.TPParam.config.user);
+    */
   }
 
 });
