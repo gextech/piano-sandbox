@@ -55,13 +55,11 @@ module.exports = function () {
     console.log("Mi email: "+email);
     console.log("new user", newUser);
     console.log("user email", newUser.email);
-    userService.createPianoUser(newUser.id, newUser.email, function (data) {
+    userService.createPianoUser(newUser.id, newUser.email, newUser.username, function (data) {
       console.log("---->> PIANO API createUser", data);
     });
 
     res.redirect('/register.html?status=created');
-
-
   });
 
   app.post('/isEmailExists', function (req, res) {
