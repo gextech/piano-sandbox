@@ -13,7 +13,7 @@ module.exports = function () {
     var date = new Date();
 
     var data = db.getUser(username);
-
+    console.log(username);
     if(data != undefined){
 
       var userRef = {
@@ -64,6 +64,7 @@ module.exports = function () {
     console.log("new user", newUser);
     console.log("user email", newUser.email);
     userService.createPianoUser(newUser.id, newUser.email, newUser.username, function (data) {
+
       console.log("---->> PIANO API createUser", data);
       if(innerUser !== undefined) {
         console.log("aqui el data:");
@@ -75,10 +76,14 @@ module.exports = function () {
           var date = new Date();
 
           var userRef = {
-            "uid" : jsonData.user.id,
+            "uid" : jsonData.user.uid,
             "email" : jsonData.user.email,
             "timestamp" : Math.round(date.getTime()/1000)
           };
+
+          console.log("**********");
+          console.log(userRef);
+          console.log("**********");
 
           var userRefTxt =  JSON.stringify(userRef);
           console.log("userRefTxt", userRefTxt);
@@ -105,11 +110,8 @@ module.exports = function () {
       } else {
         res.redirect('/register.html?status=created');
       }
-    });
 
-=======
-    res.redirect('/register.html?status=created');
->>>>>>> master
+    });
   });
 
   app.post('/isEmailExists', function (req, res) {

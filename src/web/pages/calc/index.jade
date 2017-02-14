@@ -2,11 +2,9 @@ doctype html
 html(lang='es')
   head
     include ../../header
+    script(src='/custom-js')
     script.
-      var isSomeone = "nobody";
-      console.log("lalala");
       tp.push(["setTags", ["calc"]]);
-      tp.push(['setCustomVariable', 'isSomeone', isSomeone]);
 
       tp.push(["addHandler", "loginRequired", function(params, event){
         console.log("Aqui recivo params y voy a ver el user");
@@ -32,16 +30,11 @@ html(lang='es')
             var user = event.params.user;
             console.log("Registrando a " + user.firstName + ", email: " + user.email);
 
-
             $.post("https://localhost:3000/user/register", { username: user.firstName, email: user.email, inner:true })
             .done(function(data) {
               if(data && data.userRef ){
                 console.log("Usuario registrado:");
                 console.log(data.userRef);
-
-                console.log("---------Evento: ---------");
-                console.log(event);
-                console.log(tp.containerUtils.getIframe);
 
                 //creando params para checkout
                 var paramCheck = {};
@@ -51,12 +44,12 @@ html(lang='es')
                 $.extend(paramCheck, paramsIframe.config);
                 paramCheck.allowReturnToStartState = event.params.allowReturnToStartState;
                 paramCheck.startScreen = event.params.startScreen;
+                paramCheck.termId = event.params.termId;
                 console.log(paramCheck);
 
 
                 //Iniciando checkout
                 tp.push(["setUserRef", data.userRef]);
-                console.log("-----------Justo antes del checkout----------")
                 tp.offer.startCheckout(paramCheck);
               }
             });
@@ -66,6 +59,16 @@ html(lang='es')
 
         return false;
       }]);
+
+    style.
+      iframe{
+        width: 100% !important;
+        max-width: 900px !important;
+      }
+      .tp-iframe-wrapper {
+        max-width: 900px !important;
+        width: 100% !important;
+      }
 
   body.type-three-column-home-page
     .page-wrapper
