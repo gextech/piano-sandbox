@@ -6,22 +6,6 @@ html(lang='es')
     script.
       tp.push(["setTags", ["calc"]]);
 
-      tp.push(["addHandler", "loginRequired", function(params, event){
-        console.log("Aqui recivo params y voy a ver el user");
-        console.log(params);
-        console.log(event);
-
-        /*
-        mysite.showLoginRegistration(function(tinypassUserRef) {
-           tp.push(["setUserRef", tinypassUserRef]);
-           tp.offer.startCheckout(params);
-        });
-        */
-
-        // this will prevent the Piano error screen from displaying
-        return false;
-      }]);
-
       tp.push(["addHandler", "checkoutCustomEvent", function(event){
         switch(event.eventName) {
           case "userRegister":
@@ -39,14 +23,11 @@ html(lang='es')
                 //creando params para checkout
                 var paramCheck = {};
                 var paramsIframe = tp.containerUtils.getIframe(event.params.sender);
-                console.log(event.params.sender);
-                console.log(paramsIframe);
                 $.extend(paramCheck, paramsIframe.config);
                 paramCheck.allowReturnToStartState = event.params.allowReturnToStartState;
                 paramCheck.startScreen = event.params.startScreen;
                 paramCheck.termId = event.params.termId;
                 console.log(paramCheck);
-
 
                 //Iniciando checkout
                 tp.push(["setUserRef", data.userRef]);

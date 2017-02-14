@@ -6,24 +6,10 @@ var apiUrl = "https://localhost:3000";
 var scope = angular.element($("#thisForm")).scope();
 var http = angular.injector(["ng"]).get("$http");
 
-/*
-http.defaults.useXDomain = true;
-http.defaults.withCredentials = true;
-delete http.defaults.headers.common["X-Requested-With"];
-http.defaults.headers.common["Accept"] = "application/json";
-http.defaults.headers.common["Content-Type"] = "application/json";
-*/
-
 scope.$apply(function() {
   scope.double = function(value) { return value * 2; };
   scope.isValid = false;
   scope.isEmailExist = false;
-
-  scope.customVar = "This is customVar"
-  scope.helloWorld  = function (str) {
-    console.log("helloWorld" + str);
-    return "HOLA " + str;
-  }
 
   scope.validateUser  = function (str) {
     console.log("validate" + str)
@@ -32,7 +18,6 @@ scope.$apply(function() {
     } else{
       scope.isValid = true;
     }
-
 
     return scope.isValid;
   }
@@ -102,7 +87,6 @@ scope.$apply(function() {
     var currentUser = {firstName: scope.user.name, email: scope.user.email};
     var myparams = {sender: message.sender, displayMode: "modal", allowReturnToStartState: true, startScreen: "register" , termId: currentTerm,  user: currentUser};
     message.params = { eventName: "userRegister", params: myparams };
-    console.log(message);
     var encMsg = JSON.stringify(message);
     console.log(encMsg);
 
