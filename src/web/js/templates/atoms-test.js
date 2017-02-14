@@ -1,30 +1,15 @@
 console.log("here ------->>>", this);
 console.log("here ------->>>", angular);
 
-var apiUrl = "https://65e0c1b0.ngrok.io";
+var apiUrl = "https://localhost:3000";
 
 var scope = angular.element($("#thisForm")).scope();
 var http = angular.injector(["ng"]).get("$http");
-
-/*
-http.defaults.useXDomain = true;
-http.defaults.withCredentials = true;
-delete http.defaults.headers.common["X-Requested-With"];
-http.defaults.headers.common["Accept"] = "application/json";
-http.defaults.headers.common["Content-Type"] = "application/json";
-*/
-
 
 scope.$apply(function() {
   scope.double = function(value) { return value * 2; };
   scope.isValid = false;
   scope.isEmailExist = false;
-  scope.user.email="prueba@gmail.com";
-  scope.customVar = "This is customVar"
-  scope.helloWorld  = function (str) {
-    console.log("helloWorld" + str);
-    return "HOLA " + str;
-  }
 
   scope.validateUser  = function (str) {
     console.log("validate" + str)
@@ -33,7 +18,6 @@ scope.$apply(function() {
     } else{
       scope.isValid = true;
     }
-
 
     return scope.isValid;
   }
@@ -84,4 +68,30 @@ scope.$apply(function() {
     });
     return isValid;
   }
+
+  scope.validateForm = function() {
+    console.log(scope.isValid);
+    return scope.isValid;
+  }
+
+  scope.sendDataToParent = function(currentTerm) {;
+    //Send a loginRequired event
+    var message = {};
+    message.parentURL = window.TPParam.params.url;
+    message.sender = window.TPParam.params.iframeId;
+    message.displayMode = window.TPParam.params.displayMode;
+    message.recipient = "opener";
+    //message.event = "loginRequired";
+    message.event = "customEvent";
+
+    var currentUser = {firstName: scope.user.name, email: scope.user.email};
+    var myparams = {sender: message.sender, displayMode: "modal", allowReturnToStartState: true, startScreen: "register" , termId: currentTerm,  user: currentUser};
+    message.params = { eventName: "userRegister", params: myparams };
+    var encMsg = JSON.stringify(message);
+    console.log(encMsg);
+
+    window.parent.postMessage(encMsg, message.parentURL);
+
+  }
+
 });

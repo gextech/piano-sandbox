@@ -10,6 +10,7 @@ module.exports = {
     })
   },
 
+
   createPianoUser : function (uid, email, username, cb) {
     console.log("creando user de piano");
     console.log(uid);
