@@ -63,9 +63,8 @@ module.exports = function () {
     console.log("Mi email: "+email);
     console.log("new user", newUser);
     console.log("user email", newUser.email);
-    userService.createPianoUser(newUser.id, newUser.email, newUser.first_name, function (data) {
+    userService.createPianoUser(newUser.id, newUser.email, newUser.username, function (data) {
       console.log("---->> PIANO API createUser", data);
-
       if(innerUser !== undefined) {
         console.log("aqui el data:");
         var jsonData = JSON.parse(data);
@@ -108,6 +107,9 @@ module.exports = function () {
       }
     });
 
+=======
+    res.redirect('/register.html?status=created');
+>>>>>>> master
   });
 
   app.post('/isEmailExists', function (req, res) {

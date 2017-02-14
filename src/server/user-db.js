@@ -41,7 +41,7 @@ module.exports = {
     console.log("Usuario en user-db: " + username + ", email: " + email);
     if (typeof users[username] === 'undefined') {
       console.log("Creando usuario inexistente");
-      users[username] = {"id": uuidV1(), "email": email, "first_name": username};
+      users[username] = {"id": uuidV1(), "email": email, "username": username};
     }
     console.log("-------");
     console.log(users[username]);
