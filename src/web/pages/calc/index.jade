@@ -8,64 +8,63 @@ html(lang='es')
       tp.push(["setTags", ["calc"]]);
       tp.push(['setCustomVariable', 'isSomeone', isSomeone]);
 
-      tp.push(["addHandler", "customEvent", function (event) {
-        switch (event.eventName) {
-          case "login":
-            console.log("handling login yeah", event);
-            isSomeone = "someone"
-            tp.push(['setCustomVariable', 'isSomeone', isSomeone]);
-            //tp.offer.reload(event.params.iframeid, null)
-            break;
-        }
-      }]);
-
-      tp.push(["addHandler", "showOffer", function( offerParams ){
-              // Your code after offer has been shown
-              console.log("---------------");
-              console.log("Mostrando oferta");
-              console.log(offerParams);
-              console.log(tp.offer);
-              console.log("---------------");
-          } ]);
-
-      tp.push( [ "addHandler", "showTemplate", function (templateParams) {
-          console.log("---------------");
-          console.log("Mostrando template en calc");
-          console.log(templateParams);
-          console.log("---------------");
-      } ]);
-
       tp.push(["addHandler", "loginRequired", function(params, event){
         console.log("Aqui recivo params y voy a ver el user");
         console.log(params);
         console.log(event);
+
         /*
         mysite.showLoginRegistration(function(tinypassUserRef) {
            tp.push(["setUserRef", tinypassUserRef]);
            tp.offer.startCheckout(params);
         });
         */
+
         // this will prevent the Piano error screen from displaying
         return false;
       }]);
 
-      window.addEventListener('message',function(event) {
-      	console.log("Aqui un mensaje!!!----------");
-      	console.log(event);
-      	console.log("-------------------");
-      },false);
-
       tp.push(["addHandler", "checkoutCustomEvent", function(event){
         switch(event.eventName) {
-         case "userRegister":
-           console.log("Registrar usuario y hacer el checkout");
+          case "userRegister":
 
-           console.log("Evento: ");
-           console.log(event);
-           console.log(tp.containerUtils.getIframe);
-           //console.log("Params para checkout: "+event.p);
-           break;
+            console.log("Registrar usuario y hacer el checkout");
+            var user = event.params.user;
+            console.log("Registrando a " + user.firstName + ", email: " + user.email);
+
+
+            $.post("https://localhost:3000/user/register", { username: user.firstName, email: user.email, inner:true })
+            .done(function(data) {
+              if(data && data.userRef ){
+                console.log("Usuario registrado:");
+                console.log(data.userRef);
+
+                console.log("---------Evento: ---------");
+                console.log(event);
+                console.log(tp.containerUtils.getIframe);
+
+                //creando params para checkout
+                var paramCheck = {};
+                var paramsIframe = tp.containerUtils.getIframe(event.params.sender);
+                console.log(event.params.sender);
+                console.log(paramsIframe);
+                $.extend(paramCheck, paramsIframe.config);
+                paramCheck.allowReturnToStartState = event.params.allowReturnToStartState;
+                paramCheck.startScreen = event.params.startScreen;
+                console.log(paramCheck);
+
+
+                //Iniciando checkout
+                tp.push(["setUserRef", data.userRef]);
+                console.log("-----------Justo antes del checkout----------")
+                tp.offer.startCheckout(paramCheck);
+              }
+            });
+
+         break;
         }
+
+        return false;
       }]);
 
   body.type-three-column-home-page

@@ -1,7 +1,7 @@
 console.log("here ------->>>", this);
 console.log("here ------->>>", angular);
 
-var apiUrl = "https://b60f943f.ngrok.io";
+var apiUrl = "https://localhost:3000";
 
 var scope = angular.element($("#thisForm")).scope();
 var http = angular.injector(["ng"]).get("$http");
@@ -18,7 +18,7 @@ scope.$apply(function() {
   scope.double = function(value) { return value * 2; };
   scope.isValid = false;
   scope.isEmailExist = false;
-  scope.user.email="prueba@gmail.com";
+
   scope.customVar = "This is customVar"
   scope.helloWorld  = function (str) {
     console.log("helloWorld" + str);
@@ -84,25 +84,12 @@ scope.$apply(function() {
     return isValid;
   }
 
+  scope.validateForm = function() {
+    console.log(scope.isValid);
+    return scope.isValid;
+  }
+
   scope.sendDataToParent = function(currentTerm) {;
-    console.log("*************");
-    scope.user = {
-                     "uid": "uno",
-                     "email": "prueba@gmail.com",
-                     "displayName": "atomsmail@gmail.com",
-                     "valid": true,
-                     "firstName": null,
-                     "lastName": null
-                 };
-
-    window.TPParam.config.user.valid = true;
-    console.log(window.TPParam);
-    console.log(scope.isUserValid());
-    console.log("*************");
-    console.log(window.TPParam.config.user);
-    //scope.startCheckout(currentTerm);
-    console.log(generalModule);
-
     //Send a loginRequired event
     var message = {};
     message.parentURL = window.TPParam.params.url;
@@ -111,36 +98,16 @@ scope.$apply(function() {
     message.recipient = "opener";
     //message.event = "loginRequired";
     message.event = "customEvent";
-    //message.params = {name: "aquilalala", uid: "tres", lastName: "apellido"};
-    var myparams = {uid: "tres", firstName: "Isain", lastName: "Hernandez", email:"checklocal@123.com"};
+
+    var currentUser = {firstName: scope.user.name, email: scope.user.email};
+    var myparams = {sender: message.sender, displayMode: "modal", allowReturnToStartState: true, startScreen: "register" , termId: currentTerm,  user: currentUser};
     message.params = { eventName: "userRegister", params: myparams };
     console.log(message);
     var encMsg = JSON.stringify(message);
     console.log(encMsg);
 
     window.parent.postMessage(encMsg, message.parentURL);
-    console.log(_randomString(16));
 
-
-/*
-    //Crear user en piano
-    var request = http({
-      method: "post",
-      url: apiUrl+"/user/register",
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      data: $.param({email: "test3_3@gmail.com", username: "Test tercero"})
-    });
-
-    request.success( function(data) {
-      console.log("Se registro al usuario.......");
-      console.log(data);
-    });
-
-    /*
-    console.log("trae algo el TPParam");
-    console.log(window.TPParam);
-    console.log(window.TPParam.config.user);
-    */
   }
 
 });

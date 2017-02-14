@@ -10,11 +10,12 @@ module.exports = {
     })
   },
 
-  createPianoUser : function (uid, email, cb) {
+  createPianoUser : function (uid, email, firstName, cb) {
     console.log("creando user de piano");
     console.log(uid);
     console.log(email);
-    api.request("/publisher/user/create", "POST", null, {uid:uid, email:email})
+    console.log(firstName);
+    api.request("/publisher/user/create", "POST", null, {uid:uid, email:email, first_name: firstName})
       .then(cb).catch(function (err) {
       console.log("trouble", err);
     })
