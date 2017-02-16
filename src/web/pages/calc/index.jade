@@ -4,7 +4,7 @@ html(lang='es')
     include ../../header
     script(src='/custom-js')
     script.
-      tp.push(["setTags", ["calc"]]);
+      tp.push(["setTags", ["calc2"]]);
 
       tp.push(["addHandler", "checkoutCustomEvent", function(event){
         switch(event.eventName) {
@@ -35,7 +35,28 @@ html(lang='es')
               }
             });
 
-         break;
+          break;
+
+          case "userLogin":
+            console.log("Recibiendo al email");
+            var user = event.params.user;
+            console.log(user.email);
+
+            $.post("https://localhost:3000/user/loginUser", { email: user.email })
+              .done(function(data) {
+                if(data && data.login === "success" ){
+                  console.log("Usuario logueado:");
+                  console.log(data.userRef);
+
+                  tp.push(["setUserRef", data.userRef]);
+                  location.reload();
+                } else {
+                  console.log(data);
+                }
+              });
+
+            //Reload/Send error
+          break;
         }
 
         return false;

@@ -1,6 +1,3 @@
-console.log("here ------->>>", this);
-console.log("here ------->>>", angular);
-
 var apiUrl = "https://localhost:3000";
 
 var scope = angular.element($("#thisForm")).scope();
@@ -92,6 +89,34 @@ scope.$apply(function() {
 
     window.parent.postMessage(encMsg, message.parentURL);
 
+  }
+
+  scope.userLogin = function() {
+    var userEmail = scope.user.loginEmail;
+    console.log("Login de usuario con email: "+userEmail);
+
+    if(userEmail === undefined){
+      //Mandar aviso de email vacio
+    } else {
+      //Login
+      //Send a login event
+      var message = {};
+      message.parentURL = window.TPParam.params.url;
+      message.sender = window.TPParam.params.iframeId;
+      message.displayMode = window.TPParam.params.displayMode;
+      message.recipient = "opener";
+      //message.event = "loginRequired";
+      message.event = "customEvent";
+      var currentUser = {email: userEmail};
+
+      var myparams = {sender: message.sender, displayMode: "modal", allowReturnToStartState: true, startScreen: "register" , user: currentUser};
+      message.params = { eventName: "userLogin", params: myparams };
+
+      var encMsg = JSON.stringify(message);
+      console.log(encMsg);
+
+      window.parent.postMessage(encMsg, message.parentURL);
+    }
   }
 
 });

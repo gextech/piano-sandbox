@@ -141,6 +141,62 @@ module.exports = function () {
     });
   });
 
+  app.post('/loginUser', function (req, res) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
+      res.set('Content-Type', 'application/json');
+
+      var email = req.body.email;
+      var isExist = false;
+      var userRefStr = "";
+
+      userService.verifyEmail(email, function (data) {
+        dataUser = JSON.parse(data);
+        console.log(dataUser.users);
+        if(dataUser.users.length > 0) {
+          actualUser = dataUser.users[0];
+          if(actualUser.email === email){
+            //Existe Email
+            //Crear cookies y demas
+            console.log("Creando userRef de userLogin");
+            var date = new Date();
+
+            var userRef = {
+              "uid" : actualUser.uid,
+              "email" : actualUser.email,
+              "timestamp" : Math.round(date.getTime()/1000)
+            };
+
+            console.log("**********");
+            console.log(userRef);
+            console.log("**********");
+
+            var userRefTxt =  JSON.stringify(userRef);
+            console.log("userRefTxt", userRefTxt);
+
+            var userRefTxtEncrypt = tinypass.encrypt(userRefTxt);
+            console.log("userRefTxtEncrypt", userRefTxtEncrypt);
+            console.log("user", data);
+
+            res.cookie('userRef', userRefTxtEncrypt );
+            req.session.userRef = userRefTxtEncrypt;
+
+            userRefVal = userRefTxtEncrypt.split("=");
+            if(userRefVal.length > 0){
+              userRefStr = userRefVal[0];
+            }
+          }
+        }
+
+        if(userRefStr !== ""){
+          res.send({login: "success", userRef: userRefStr});
+        } else {
+          res.send({login: "error", msg: "Usuario no existe, verificar"});
+        }
+      });
+    });
+
   app.get('/getHola', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
