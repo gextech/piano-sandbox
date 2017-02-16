@@ -2,7 +2,7 @@ doctype html
 html(lang='es')
   head
     include ../../header
-    script(src='/custom-js')
+    script(src='/user-ref')
     script.
       tp.push(["setTags", ["calc2"]]);
 
@@ -34,7 +34,6 @@ html(lang='es')
                 tp.offer.startCheckout(paramCheck);
               }
             });
-
           break;
 
           case "userLogin":

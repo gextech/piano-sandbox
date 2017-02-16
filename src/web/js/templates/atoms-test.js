@@ -118,5 +118,4 @@ scope.$apply(function() {
       window.parent.postMessage(encMsg, message.parentURL);
     }
   }
-
 });

@@ -45,7 +45,7 @@ app.get('/logout', function (req, res) {
   //})
 });
 
-app.get('/custom-js', function (req, res) {
+app.get('/user-ref', function (req, res) {
   res.setHeader('content-type', 'text/javascript');
   if(req.session.userRef) {
     userRef = req.session.userRef.split("=");
